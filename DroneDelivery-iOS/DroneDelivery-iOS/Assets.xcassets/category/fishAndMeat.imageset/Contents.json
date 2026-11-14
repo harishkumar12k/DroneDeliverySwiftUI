@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "fishAndMeat.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
