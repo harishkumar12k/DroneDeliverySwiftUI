@@ -51,8 +51,8 @@ jobs:
       matrix:
         include:
           - language: swift
-            # 'autobuild' attempts to automatically find and compile your Xcode/Swift project
-            build-mode: autobuild
+            # Using manual build mode ensures xcodebuild targets the project in DroneDelivery-iOS/
+            build-mode: manual
 
     steps:
       # Step 1: Check out the repository source code to the GitHub Actions runner
@@ -69,18 +69,19 @@ jobs:
           # 'security-and-quality' also flags maintainability, bugs, and reliability issues
           queries: +security-extended,security-and-quality
 
-      # (Optional) If 'autobuild' ever has trouble building your Xcode workspace/project,
-      # you can change 'build-mode: manual' above and uncomment the step below:
-      #
-      # - name: Build Xcode Project
-      #   run: |
-      #     xcodebuild clean build \
-      #       -project DroneDelivery-iOS.xcodeproj \
-      #       -scheme DroneDelivery-iOS \
-      #       -destination 'generic/platform=iOS Simulator' \
-      #       CODE_SIGNING_ALLOWED=NO
+      # Step 3: Explicitly build the Xcode project located inside the DroneDelivery-iOS folder.
+      # Because your project is in a subdirectory, this ensures xcodebuild reliably builds the
+      # right scheme without relying on autobuild guessing.
+      - name: Build Xcode Project
+        working-directory: DroneDelivery-iOS
+        run: |
+          xcodebuild clean build \
+            -project DroneDelivery-iOS.xcodeproj \
+            -scheme DroneDelivery-iOS \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
 
-      # Step 3: Extract the compiled Swift AST/database and run the security queries
+      # Step 4: Extract the compiled Swift AST/database and run the security queries
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
