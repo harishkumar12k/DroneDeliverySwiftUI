@@ -1,0 +1,88 @@
+# ==============================================================================
+# GitHub Actions Workflow: CodeQL Static Application Security Testing (SAST)
+# ==============================================================================
+# This workflow automatically scans your Swift codebase for vulnerabilities,
+# security flaws, and code quality issues whenever new code lands on 'main'.
+# ==============================================================================
+
+name: "CodeQL Analysis"
+
+# ------------------------------------------------------------------------------
+# Triggers: When should this workflow run?
+# ------------------------------------------------------------------------------
+on:
+  push:
+    # Runs whenever you push a commit directly or merge a Pull Request into 'main'
+    branches: [ "main" ]
+
+# ------------------------------------------------------------------------------
+# Concurrency: Avoid redundant CI runs
+# ------------------------------------------------------------------------------
+# If you push a new commit while a previous scan on 'main' is still running,
+# cancel the older run to save Actions minutes and resources.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ------------------------------------------------------------------------------
+# Jobs: The actual tasks to execute
+# ------------------------------------------------------------------------------
+jobs:
+  analyze:
+    name: Analyze (Swift)
+    
+    # Swift compilation requires macOS with Xcode and developer toolchains installed.
+    # GitHub hosted runners provide 'macos-14' or 'macos-15' with modern Xcode versions.
+    runs-on: macos-15
+    
+    # Cancel the job if it takes longer than 60 minutes (guards against hanging builds)
+    timeout-minutes: 60
+
+    # Permissions required by CodeQL to upload scanning results to GitHub Security tab
+    permissions:
+      security-events: write # Allows writing alerts into GitHub's "Security" tab
+      packages: read         # Allows reading packages if dependencies require it
+      actions: read          # Allows reading workflow actions
+      contents: read         # Allows checking out (cloning) the repository code
+
+    # Matrix strategy: makes it easy to add more languages in the future if needed
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: swift
+            # 'autobuild' attempts to automatically find and compile your Xcode/Swift project
+            build-mode: autobuild
+
+    steps:
+      # Step 1: Check out the repository source code to the GitHub Actions runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Initialize the CodeQL database and load analysis query suites
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # 'security-extended' checks for security vulnerabilities beyond standard rules
+          # 'security-and-quality' also flags maintainability, bugs, and reliability issues
+          queries: +security-extended,security-and-quality
+
+      # (Optional) If 'autobuild' ever has trouble building your Xcode workspace/project,
+      # you can change 'build-mode: manual' above and uncomment the step below:
+      #
+      # - name: Build Xcode Project
+      #   run: |
+      #     xcodebuild clean build \
+      #       -project DroneDelivery-iOS.xcodeproj \
+      #       -scheme DroneDelivery-iOS \
+      #       -destination 'generic/platform=iOS Simulator' \
+      #       CODE_SIGNING_ALLOWED=NO
+
+      # Step 3: Extract the compiled Swift AST/database and run the security queries
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          # Category tag helps organize results in GitHub's Security dashboard
+          category: "/language:${{ matrix.language }}"
