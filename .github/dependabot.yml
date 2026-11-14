@@ -1,0 +1,41 @@
+# ==============================================================================
+# Dependabot Configuration File
+# ==============================================================================
+# Dependabot scans your dependencies for known security vulnerabilities and
+# automatically creates Pull Requests to update outdated or insecure packages.
+# Docs: https://docs.github.com/en/code-security/dependabot
+# ==============================================================================
+
+version: 2
+updates:
+  # ----------------------------------------------------------------------------
+  # 1. GitHub Actions Workflows Security Updates
+  # ----------------------------------------------------------------------------
+  # Keeps your CI/CD actions (like checkout, codeql-action) up to date and secure.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # ----------------------------------------------------------------------------
+  # 2. Swift Package Manager (SPM) Dependencies
+  # ----------------------------------------------------------------------------
+  # Scans any Swift packages used in your project for security vulnerabilities.
+  - package-ecosystem: "swift"
+    directory: "/DroneDelivery-iOS"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "swift"
