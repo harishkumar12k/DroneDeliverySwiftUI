@@ -1,3 +1,10 @@
+//
+//  HomeViewState.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Immutable UDF state representing the complete Home view.

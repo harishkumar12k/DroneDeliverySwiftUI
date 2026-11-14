@@ -1,3 +1,10 @@
+//
+//  HomeDashboardMapper.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Stateless mapper transforming `HomeDashboardDTO` to `HomeDashboard` domain entity.

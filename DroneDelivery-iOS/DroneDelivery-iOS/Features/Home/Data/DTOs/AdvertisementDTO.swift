@@ -1,3 +1,10 @@
+//
+//  AdvertisementDTO.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Data transfer object for advertisement banners.

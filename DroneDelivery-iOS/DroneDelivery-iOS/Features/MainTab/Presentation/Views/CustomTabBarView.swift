@@ -1,3 +1,10 @@
+//
+//  CustomTabBarView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Custom bottom tab bar with primary background, white selected color and lightGray unselected color.

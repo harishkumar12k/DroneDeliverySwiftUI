@@ -1,3 +1,10 @@
+//
+//  HomeProductCardView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Reusable product card view displaying image, discount badge, name, weight, and pricing.

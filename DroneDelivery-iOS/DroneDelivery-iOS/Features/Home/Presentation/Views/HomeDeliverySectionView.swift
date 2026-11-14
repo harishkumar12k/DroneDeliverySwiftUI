@@ -1,3 +1,10 @@
+//
+//  HomeDeliverySectionView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Horizontal delivery section containing header with "Reveal All" and scrolling product cards.

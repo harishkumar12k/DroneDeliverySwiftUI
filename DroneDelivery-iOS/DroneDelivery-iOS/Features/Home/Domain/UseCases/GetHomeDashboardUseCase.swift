@@ -1,3 +1,10 @@
+//
+//  GetHomeDashboardUseCase.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Use case protocol for fetching the Home dashboard entity.

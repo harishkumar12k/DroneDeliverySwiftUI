@@ -1,3 +1,10 @@
+//
+//  MainTabView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Main application screen managing tab navigation and hosting the Home coordinator.

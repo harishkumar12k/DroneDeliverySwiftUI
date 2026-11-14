@@ -1,3 +1,10 @@
+//
+//  ProductCategory.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Represents a product category item.

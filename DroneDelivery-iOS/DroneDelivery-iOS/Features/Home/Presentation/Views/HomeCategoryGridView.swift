@@ -1,3 +1,10 @@
+//
+//  HomeCategoryGridView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// 3-column grid displaying product categories with primary-bordered circular images.

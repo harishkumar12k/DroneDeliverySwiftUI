@@ -1,3 +1,10 @@
+//
+//  HomeCoordinator.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Coordinator managing navigation path and screen factory for Home feature.

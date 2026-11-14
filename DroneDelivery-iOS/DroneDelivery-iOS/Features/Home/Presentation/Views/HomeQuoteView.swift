@@ -1,3 +1,10 @@
+//
+//  HomeQuoteView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Italicized quote of the day displayed at the bottom of the home feed.

@@ -1,3 +1,10 @@
+//
+//  DomainError.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Typed domain errors representing failures across business operations.

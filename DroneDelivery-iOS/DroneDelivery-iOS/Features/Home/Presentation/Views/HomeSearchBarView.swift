@@ -1,3 +1,10 @@
+//
+//  HomeSearchBarView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Capsule-shaped search bar embedded in the primary-colored header.

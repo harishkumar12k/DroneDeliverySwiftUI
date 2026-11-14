@@ -1,3 +1,10 @@
+//
+//  HomeAdSliderView.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Banner carousel showing up to 5 promotional advertisements with page indicators.

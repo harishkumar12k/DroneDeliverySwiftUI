@@ -1,3 +1,10 @@
+//
+//  Spacing.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import SwiftUI
 
 /// Design system tokens for consistent spacing across the app.

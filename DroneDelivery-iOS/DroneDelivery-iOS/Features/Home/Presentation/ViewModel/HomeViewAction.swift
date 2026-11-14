@@ -1,3 +1,10 @@
+//
+//  HomeViewAction.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// User actions and intents from the Home screen.

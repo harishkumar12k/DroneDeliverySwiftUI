@@ -1,3 +1,10 @@
+//
+//  Advertisement.swift
+//  DroneDelivery-iOS
+//
+//  Created by Harish Kumar on 13/11/26.
+//
+
 import Foundation
 
 /// Represents an advertisement slider item on the Home screen.
