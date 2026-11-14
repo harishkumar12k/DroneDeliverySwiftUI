@@ -1,8 +1,9 @@
 # ==============================================================================
 # GitHub Actions Workflow: CodeQL Static Application Security Testing (SAST)
 # ==============================================================================
-# This workflow automatically scans your Swift codebase for vulnerabilities,
-# security flaws, and code quality issues whenever new code lands on 'main'.
+# This workflow scans your Swift codebase for vulnerabilities and code quality issues:
+# 1. On Pull Requests targeting 'main' (catches bugs BEFORE merge)
+# 2. When merged/pushed into 'main' (keeps 'main' security baseline verified)
 # ==============================================================================
 
 name: "CodeQL Analysis"
@@ -12,14 +13,16 @@ name: "CodeQL Analysis"
 # ------------------------------------------------------------------------------
 on:
   push:
-    # Runs whenever you push a commit directly or merge a Pull Request into 'main'
+    # Runs when code is merged into 'main'
+    branches: [ "main" ]
+  pull_request:
+    # Runs on PRs targeting 'main' so you see alerts before merging
     branches: [ "main" ]
 
 # ------------------------------------------------------------------------------
 # Concurrency: Avoid redundant CI runs
 # ------------------------------------------------------------------------------
-# If you push a new commit while a previous scan on 'main' is still running,
-# cancel the older run to save Actions minutes and resources.
+# Cancels in-progress runs on the same branch/PR when a new commit is pushed.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -32,20 +35,19 @@ jobs:
     name: Analyze (Swift)
     
     # Swift compilation requires macOS with Xcode and developer toolchains installed.
-    # GitHub hosted runners provide 'macos-14' or 'macos-15' with modern Xcode versions.
     runs-on: macos-15
     
-    # Cancel the job if it takes longer than 60 minutes (guards against hanging builds)
+    # Cancel the job if it takes longer than 60 minutes
     timeout-minutes: 60
 
     # Permissions required by CodeQL to upload scanning results to GitHub Security tab
+    # and annotate Pull Requests with findings
     permissions:
-      security-events: write # Allows writing alerts into GitHub's "Security" tab
+      security-events: write # Allows writing alerts into GitHub's "Security" tab & PR checks
       packages: read         # Allows reading packages if dependencies require it
       actions: read          # Allows reading workflow actions
       contents: read         # Allows checking out (cloning) the repository code
 
-    # Matrix strategy: makes it easy to add more languages in the future if needed
     strategy:
       fail-fast: false
       matrix:
@@ -65,13 +67,9 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-          # 'security-extended' checks for security vulnerabilities beyond standard rules
-          # 'security-and-quality' also flags maintainability, bugs, and reliability issues
           queries: +security-extended,security-and-quality
 
-      # Step 3: Explicitly build the Xcode project located inside the DroneDelivery-iOS folder.
-      # Because your project is in a subdirectory, this ensures xcodebuild reliably builds the
-      # right scheme without relying on autobuild guessing.
+      # Step 3: Explicitly build the Xcode project located inside DroneDelivery-iOS folder
       - name: Build Xcode Project
         working-directory: DroneDelivery-iOS
         run: |
@@ -85,5 +83,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          # Category tag helps organize results in GitHub's Security dashboard
           category: "/language:${{ matrix.language }}"
