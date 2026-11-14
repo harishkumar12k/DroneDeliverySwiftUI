@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Scan PR Dependencies for Known Vulnerabilities
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           # Fails the PR check if a new dependency has moderate, high, or critical vulnerabilities
           fail-on-severity: moderate
